@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using ContosoUniversity.Models;
+using System.Security.AccessControl;
 using OnlineBanking.DAL;
 using OnlineBanking.Models;
 
@@ -29,13 +29,13 @@ namespace ContosoUniversity.DAL
             context.SaveChanges();
             var courses = new List<Konto>
             {
-            new Konto{Id= 1050,KontoTypId= 0001,KontoTyp= "Girokonto", Iban = "DE258465135486813516845"},
-            new Konto{Id=4022,KontoTypId=0002,KontoTyp="Girokonto",},
-            new Konto{Id=4041,KontoTypId=0003,KontoTyp="Girokonto",},
-            new Konto{Id=1045,KontoTypId=0004,KontoTyp="Girokonto",},
-            new Konto{Id=3141,KontoTypId=0005,KontoTyp="Girokonto",},
-            new Konto{Id=2021,KontoTypId=0006,KontoTyp="Girokonto",},
-            new Konto{Id=2042,KontoTypId=0007,KontoTyp="Girokonto",}
+            new Konto{Id=1050,KontoTypId=0001,Kontostand= 0, Iban = "DE258465135486813516845"},
+            new Konto{Id=4022,KontoTypId=0002,Kontostand= 0, Iban = "DE252384315486813516845"},
+            new Konto{Id=4041,KontoTypId=0003,Kontostand= 0, Iban = "DE258468463123813516845"},
+            new Konto{Id=1045,KontoTypId=0004,Kontostand= 0, Iban = "DE258465135138713516845"},
+            new Konto{Id=3141,KontoTypId=0005,Kontostand= 0, Iban = "DE258465135456813516845"},
+            new Konto{Id=2021,KontoTypId=0006,Kontostand= 0, Iban = "DE258465135486813518645"},
+            new Konto{Id=2042,KontoTypId=0007,Kontostand= 0, Iban = "DE258446855486813516845"}
             };
             courses.ForEach(s => context.Konto.Add(s));
             context.SaveChanges();
