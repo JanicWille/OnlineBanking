@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using OnlineBanking.dal;
 using OnlineBanking.Models;
 
 namespace OnlineBanking.DAL
@@ -9,12 +10,13 @@ namespace OnlineBanking.DAL
 
         public BankingContext() : base("BankingContext")
         {
+            Database.SetInitializer(new BankingInitializer());
         }
 
         public DbSet<Konto> Konto { get; set; }
         public DbSet<KontoTyp> KontoTyp { get; set; }
         public DbSet<Kunde> Kunde { get; set; }
-        public DbSet<KundeKonto> KundeKonto { get; set; }
+        //public DbSet<KundeKonto> KundeKonto { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

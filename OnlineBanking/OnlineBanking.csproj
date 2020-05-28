@@ -128,11 +128,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KundenController.cs" />
     <Compile Include="dal\BankingContext.cs" />
     <Compile Include="dal\BankingInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005251257145_initial.cs" />
+    <Compile Include="Migrations\202005251257145_initial.designer.cs">
+      <DependentUpon>202005251257145_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Konto.cs" />
     <Compile Include="Models\KontoTyp.cs" />
     <Compile Include="Models\Kunde.cs" />
@@ -176,6 +182,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Kunden\Create.cshtml" />
+    <Content Include="Views\Kunden\Delete.cshtml" />
+    <Content Include="Views\Kunden\Details.cshtml" />
+    <Content Include="Views\Kunden\Edit.cshtml" />
+    <Content Include="Views\Kunden\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -192,6 +203,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202005251257145_initial.resx">
+      <DependentUpon>202005251257145_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
