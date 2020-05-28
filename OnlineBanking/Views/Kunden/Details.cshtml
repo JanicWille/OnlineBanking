@@ -33,7 +33,28 @@
         <dd>
             @Html.DisplayFor(model => model.Geburtsdatum)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.Konten)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>IBAN</th>
+                    <th>Kontotyp</th>
+                </tr>
+                @foreach (var item in Model.Konten)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Konto.Iban)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Konto.KontoTyp)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
     </dl>
 </div>
 <p>
