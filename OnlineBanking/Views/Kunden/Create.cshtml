@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Neu erstellen</h2>
 
 
 @using (Html.BeginForm()) 
@@ -15,16 +15,18 @@
         <h4>Kunde</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nachname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nachname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nachname, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @*@Html.LabelFor(model => model.Nachname, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <label class="control-label col-md-2" for="Nachname">Nachname*</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Nachname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nachname, "", new { @class = "text-danger" })
         </div>
+    </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Vorname, htmlAttributes: new { @class = "control-label col-md-2" })
+            @* @Html.LabelFor(model => model.Vorname, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2" for="Vorname">Vorname*</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Vorname, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Vorname, "", new { @class = "text-danger" })
@@ -32,7 +34,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Geburtsdatum, htmlAttributes: new { @class = "control-label col-md-2" })
+            @* @Html.LabelFor(model => model.Geburtsdatum, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2" for="Geburtsdatum">Geburtsdatum*</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Geburtsdatum, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Geburtsdatum, "", new { @class = "text-danger" })
@@ -40,15 +43,16 @@
         </div>
 
         <div class="form-group">
+            <label class="col-md-2">*Pflichtfeld</label>
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Speichern" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("zurück", "Index")
 </div>
 
 @section Scripts {

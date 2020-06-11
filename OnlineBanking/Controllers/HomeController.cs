@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineBanking.DAL;
+using OnlineBanking.ViewModels;
 
 namespace OnlineBanking.Controllers
 {
     public class HomeController : Controller
     {
+        private BankingContext db = new BankingContext();
+
         public ActionResult Index()
         {
             return View();
@@ -15,9 +19,14 @@ namespace OnlineBanking.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            IQueryable<Eroeffnungsdatum> data = from kunde in db.Kunde
+                group kunde by kunde.EroeffnungsDatum into dateGroup
+                select new Eroeffnungsdatum()
+                {
+                    KontoEroeffnung = dateGroup.Key,
+                    KundenCount = dateGroup.Count()
+                };
+            return View(data.ToList());
         }
 
         public ActionResult Contact()

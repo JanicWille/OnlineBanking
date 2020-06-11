@@ -49,7 +49,7 @@
                             @Html.DisplayFor(modelItem => item.Konto.Iban)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Konto.KontoTyp)
+                            @Html.DisplayFor(modelItem => item.Konto.KontoTyp.Bezeichnung)
                         </td>
                     </tr>
                 }
@@ -58,6 +58,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Bearbeiten", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("zurück", "Index")
 </p>
