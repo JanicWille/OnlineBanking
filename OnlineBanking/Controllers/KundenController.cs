@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Data.Entity;
@@ -13,6 +14,8 @@ using OnlineBanking.Models;
 using static System.String;
 using PagedList;
 using static OnlineBanking.Migrations.Configuration;
+using System.Data.Entity.Infrastructure;
+using OnlineBanking.ViewModels;
 
 namespace OnlineBanking.Controllers
 {
@@ -111,23 +114,48 @@ namespace OnlineBanking.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nachname,Vorname,Geburtsdatum")] Kunde kunde)
+        public ActionResult Create(KundeKontoViewModel vm)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var kunde = new Kunde
+                    {
+                        Geburtsdatum = vm.Geburtsdatum,
+                        Nachname = vm.Nachname,
+                        Vorname = vm.Vorname,
+                        EroeffnungsDatum = DateTime.Today,
+                        Konten = new List<KundeKonto>()
+                    };
+
+                    var konto = new KundeKonto
+                    {
+                        Kunde = kunde,
+                        Konto = new Konto()
+                        {
+                            Kontostand = 50,
+                            Iban = "1234",
+                            KontoTyp = new KontoTyp()
+                            {
+                                Id = 1,
+                                Bezeichnung = "Giro"
+                            }
+                        }
+                    };
+                    kunde.Konten.Add(konto);
+
                     db.Kunde.Add(kunde);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
-            catch (DataException /* dex */)
+            catch (RetryLimitExceededException /* dex */)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("", "Änderungen konnten nicht gespeichert werden. Versuchen sie es erneut. Falls das Problem bestehen bleibt, wenden Sie sich bitte an den Administrator.");
             }
-            return View(kunde);
+            return View(vm);
         }
 
         // GET: Kunden/Edit/5
@@ -166,7 +194,7 @@ namespace OnlineBanking.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (DataException /* dex */)
+                catch (RetryLimitExceededException /* dex */)
                 {
                     //Log the error (uncomment dex variable name and add a line here to write a log.
                     ModelState.AddModelError("", "Änderungen konnten nicht gespeichert werden. Versuchen sie es erneut. Falls das Problem bestehen bleibt, wenden Sie sich bitte an den Administrator.");
@@ -205,7 +233,7 @@ namespace OnlineBanking.Controllers
                 db.Kunde.Remove(kunde);
                 db.SaveChanges();
             }
-            catch (DataException/* dex */)
+            catch (RetryLimitExceededException /* dex */)
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 return RedirectToAction("Delete", new { id = id, saveChangesError = true });

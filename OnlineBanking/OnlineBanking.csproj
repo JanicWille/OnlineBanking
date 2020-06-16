@@ -135,11 +135,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KundenController.cs" />
+    <Compile Include="dal\BankingConfiguration.cs" />
     <Compile Include="dal\BankingContext.cs" />
     <Compile Include="dal\BankingInitializer.cs" />
+    <Compile Include="dal\BankingInterceptorLogging.cs" />
+    <Compile Include="dal\BankingInterceptorTransientErrors.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Migrations\202005251257145_initial.cs" />
     <Compile Include="Migrations\202005251257145_initial.designer.cs">
       <DependentUpon>202005251257145_initial.cs</DependentUpon>
@@ -156,6 +161,7 @@
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Eroeffnungsdatum.cs" />
+    <Compile Include="ViewModels\KundeKontoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

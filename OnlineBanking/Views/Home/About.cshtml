@@ -1,7 +1,30 @@
-﻿@{
-    ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿@model IEnumerable<OnlineBanking.ViewModels.Eroeffnungsdatum>
 
-<p>Use this area to provide additional information.</p>
+@{
+    ViewBag.Title = "Kundenstatistik";
+}
+
+<h2>Kundenstatistik</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Eröffnungsdatum
+        </th>
+        <th>
+            Kunden
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KontoEroeffnung)
+            </td>
+            <td>
+                @item.KundenCount
+            </td>
+        </tr>
+    }
+</table>
