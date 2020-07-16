@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.WebSockets;
+using Antlr.Runtime;
 using OnlineBanking.Models;
 
 namespace OnlineBanking.ViewModels
@@ -25,6 +28,11 @@ namespace OnlineBanking.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime EroeffnungsDatum { get; set; }
 
+        public virtual SelectList KontoTypList { get; set; }
 
+        public KundeKontoViewModel()
+        {
+            Konten = new List<KundeKonto>();
+        }
     }
 }

@@ -34,12 +34,12 @@ namespace OnlineBanking.Migrations
             };
 
             kunden.ForEach(k => context.Kunde.Add(k));
-            var kontoTyp = new KontoTyp
-            {
-                Bezeichnung = "Girokonto",
-                Id = 1
-            };
-            context.KontoTyp.Add(kontoTyp);
+            //var kontoTyp = new KontoTyp
+            //{
+            //    Bezeichnung = "Girokonto",
+            //    Id = 1
+            //};
+            //context.KontoTyp.Add(kontoTyp);
 
             var konten = new List<Konto>
             {

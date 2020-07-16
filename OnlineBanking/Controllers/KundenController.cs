@@ -15,6 +15,7 @@ using static System.String;
 using PagedList;
 using static OnlineBanking.Migrations.Configuration;
 using System.Data.Entity.Infrastructure;
+using System.Threading.Tasks;
 using OnlineBanking.ViewModels;
 
 namespace OnlineBanking.Controllers
@@ -106,8 +107,18 @@ namespace OnlineBanking.Controllers
         // GET: Kunden/Create
         public ActionResult Create()
         {
-            return View();
+            KundeKontoViewModel vm = new KundeKontoViewModel();
+            vm.KontoTypList = new SelectList(db.KontoTyp.ToList(), "ID", "Bezeichnung");
+            return View(vm);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> AddKontoTask([Bind("Kunden")] Konto order)
+        //{
+        //    KundeKonto  (new KundeKonto());
+        //    return PartialView("KundeKonto", order);
+        //}
 
         // POST: Kunden/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -129,18 +140,16 @@ namespace OnlineBanking.Controllers
                         Konten = new List<KundeKonto>()
                     };
 
+                    Random rnd = new Random();
                     var konto = new KundeKonto
                     {
                         Kunde = kunde,
+                        // Hinzufügen eines Kontos mit Iban und Kontotyp ist mehrfach möglich
                         Konto = new Konto()
                         {
-                            Kontostand = 50,
-                            Iban = "1234",
-                            KontoTyp = new KontoTyp()
-                            {
-                                Id = 1,
-                                Bezeichnung = "Giro"
-                            }
+                            Kontostand = 0,
+                            Iban = Convert.ToString(rnd.Next(1000, 9999)),      //Hier den Randomizer einfügen
+                            KontoTypId = 6
                         }
                     };
                     kunde.Konten.Add(konto);
