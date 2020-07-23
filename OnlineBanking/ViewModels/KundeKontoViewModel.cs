@@ -22,17 +22,12 @@ namespace OnlineBanking.ViewModels
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime Geburtsdatum { get; set; }
-        public virtual ICollection<KundeKonto> Konten { get; set; }
 
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
-        public DateTime EroeffnungsDatum { get; set; }
-
-        public virtual SelectList KontoTypList { get; set; }
+        public virtual List<KontoViewModel> Konten { get; set; }
 
         public KundeKontoViewModel()
         {
-            Konten = new List<KundeKonto>();
+            Konten = new List<KontoViewModel>();
         }
     }
 }

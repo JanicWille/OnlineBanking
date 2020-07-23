@@ -85,7 +85,7 @@ namespace OnlineBanking.Controllers
             }
 
             Kunde kunde = db.Kunde
-                .Include(x => x.Konten.Select(k => k.Konto.KontoTyp))
+                .Include(x => x.Konten.Select(k => k.KontoTyp))
                 .Select(x => x)
                 .Single(x => x.Id == id);
 
@@ -108,24 +108,24 @@ namespace OnlineBanking.Controllers
         public ActionResult Create()
         {
             KundeKontoViewModel vm = new KundeKontoViewModel();
-            vm.KontoTypList = new SelectList(db.KontoTyp.ToList(), "ID", "Bezeichnung");
             return View(vm);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> AddKontoTask([Bind("Kunden")] Konto order)
-        //{
-        //    KundeKonto  (new KundeKonto());
-        //    return PartialView("KundeKonto", order);
-        //}
+        [HttpPost]
+        // [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddKontoTask([Bind(Include = "Konten")] KundeKontoViewModel kundeKonto)
+        {
+            kundeKonto.Konten.Add(new KontoViewModel());
+            //vm.KontoTypList = new SelectList(db.KontoTyp.ToList(), "ID", "Bezeichnung");
+            return PartialView("KundeKonto", kundeKonto);
+        }
 
         // POST: Kunden/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(KundeKontoViewModel vm)
+        public async Task<ActionResult> Create([Bind( Include = "Konten")]KundeKontoViewModel vm)
         {
             try
             {
@@ -136,21 +136,20 @@ namespace OnlineBanking.Controllers
                         Geburtsdatum = vm.Geburtsdatum,
                         Nachname = vm.Nachname,
                         Vorname = vm.Vorname,
-                        EroeffnungsDatum = DateTime.Today,
-                        Konten = new List<KundeKonto>()
+                        Konten = new List<Konto>()
                     };
 
                     Random rnd = new Random();
-                    var konto = new KundeKonto
+                    var konto = new Konto
                     {
                         Kunde = kunde,
+                        EroeffnungsDatum = DateTime.Today,
                         // Hinzufügen eines Kontos mit Iban und Kontotyp ist mehrfach möglich
-                        Konto = new Konto()
-                        {
-                            Kontostand = 0,
-                            Iban = Convert.ToString(rnd.Next(1000, 9999)),      //Hier den Randomizer einfügen
-                            KontoTypId = 6
-                        }
+
+                        Kontostand = 0,
+                        Iban = Convert.ToString(rnd.Next(1000, 9999)),      //Hier den Randomizer einfügen
+                        KontoTypId = 1
+                        
                     };
                     kunde.Konten.Add(konto);
 

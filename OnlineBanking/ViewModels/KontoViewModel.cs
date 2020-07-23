@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using OnlineBanking.Models;
 
-namespace OnlineBanking.Models
+namespace OnlineBanking.ViewModels
 {
-    public class Konto : ModelBase
+    public class KontoViewModel
     {
-        [Required]
         public string Iban { get; set; }
 
         public decimal Kontostand { get; set; }
 
-        [Required]
         public int KontoTypId { get; set; }
 
         public KontoTyp KontoTyp { get; set; }
@@ -23,9 +22,10 @@ namespace OnlineBanking.Models
 
         public Kunde Kunde { get; set; }
 
-        [Column(TypeName = "Date")]
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime EroeffnungsDatum { get; set; }
+
+        public virtual SelectList KontoTypList { get; set; }
     }
 }

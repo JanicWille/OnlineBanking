@@ -19,7 +19,7 @@ namespace OnlineBanking.Controllers
 
         public ActionResult About()
         {
-            IQueryable<Eroeffnungsdatum> data = from kunde in db.Kunde
+            IQueryable<Eroeffnungsdatum> data = from kunde in db.Konto
                 group kunde by kunde.EroeffnungsDatum into dateGroup
                 select new Eroeffnungsdatum()
                 {

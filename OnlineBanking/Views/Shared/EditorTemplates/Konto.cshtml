@@ -1,9 +1,9 @@
-﻿@model OnlineBanking.ViewModels.KundeKontoViewModel
+﻿@model OnlineBanking.ViewModels.KontoViewModel
 
 <div class="form-group">
     <label class="control-label col-md-2" for="Kontotyp">Kontotyp*</label>
     <div class="col-md-10">
-        @Html.DropDownList("KontoTypId", Model.KontoTypList,
+        @Html.DropDownList("Konten", Model.KontoTypList,
             new { @class = "form-control" })
     </div>
 </div>

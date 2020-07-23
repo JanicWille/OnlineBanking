@@ -7,13 +7,13 @@ namespace OnlineBanking.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class initial : IMigrationMetadata
+    public sealed partial class AlterKundeKontoModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AlterKundeKontoModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005251257145_initial"; }
+            get { return "202007201311210_AlterKundeKontoModel"; }
         }
         
         string IMigrationMetadata.Source

@@ -10,9 +10,9 @@
 <h2>Neu erstellen</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form" }))
 {
-    @Html.AntiForgeryToken()
+    // @Html.AntiForgeryToken()
 
     <div class="col-md-4">
         <h4>Kunde</h4>
@@ -46,12 +46,15 @@
             @Html.EditorFor(model => model.Konten)
         </div>
 
-        <div class="form-group">
-            <input class="col-md-offset-2 col-md-10"
-                   type="button"
-                   id="addKontoBtn"
-                   value="Konto hinzufügen"
-                   onclick="javascript:showKonto(); return false;" />
+        @*<div class="form-group">
+                <input class="col-md-offset-2 col-md-10"
+                       type="button"
+                       id="addKontoBtn"
+                       value="Konto hinzufügen"
+                       onclick="javascript:showKonto(); return false;" />
+            </div>*@
+        <div class="col-md-4">
+            <input class="btn btn-default" type="button" id="addKontoBtn" value="Add Konto" />
         </div>
 
         <label class="control-label col-md-2">*Pflichtfeld</label>
@@ -74,15 +77,15 @@
 
     <script type="text/javascript">
         $("#addKontoBtn").on('click',
-            function() {
+            function () {
                 $.ajax({
                     async: true,
-                    data: $('#addKontoBtn').serialize(),
+                    data: $('#form').serialize(),
                     type: "POST",
-                    url: '/Kunden/Create',
-                    success: function(partialView) {
+                    url: '/Kunden/AddKontoTask',
+                    success: function (partialView) {
                         console.log("partialView: " + partialView);
-                        $('#addKontoBtn').html(partialView);
+                        $('#addKonto').html(partialView);
                     }
                 });
             });

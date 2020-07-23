@@ -21,11 +21,7 @@ namespace OnlineBanking.Models
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime Geburtsdatum { get; set; }
-        public virtual ICollection<KundeKonto> Konten { get; set; }
 
-        [Column(TypeName = "Date")]
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
-        public DateTime EroeffnungsDatum { get; set; }
+        public virtual ICollection<Konto> Konten { get; set; }
     }
 }
