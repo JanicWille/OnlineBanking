@@ -12,7 +12,7 @@
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form" }))
 {
-    // @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
     <div class="col-md-4">
         <h4>Kunde</h4>

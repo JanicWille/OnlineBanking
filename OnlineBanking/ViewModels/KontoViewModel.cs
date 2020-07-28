@@ -10,6 +10,11 @@ namespace OnlineBanking.ViewModels
 {
     public class KontoViewModel
     {
+        public KontoViewModel()
+        {
+            this.KontoTypList = new List<SelectListItem>();
+        }
+
         public string Iban { get; set; }
 
         public decimal Kontostand { get; set; }
@@ -26,6 +31,6 @@ namespace OnlineBanking.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime EroeffnungsDatum { get; set; }
 
-        public virtual SelectList KontoTypList { get; set; }
+        public virtual IEnumerable<SelectListItem> KontoTypList { get; set; }
     }
 }

@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using OnlineBanking.DAL;
-using OnlineBanking.Migrations;
 using OnlineBanking.Models;
 using static System.String;
 using PagedList;
-using static OnlineBanking.Migrations.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using OnlineBanking.ViewModels;
@@ -112,11 +107,24 @@ namespace OnlineBanking.Controllers
         }
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddKontoTask([Bind(Include = "Konten")] KundeKontoViewModel kundeKonto)
         {
-            kundeKonto.Konten.Add(new KontoViewModel());
-            //vm.KontoTypList = new SelectList(db.KontoTyp.ToList(), "ID", "Bezeichnung");
+            var kontoTypen = db.KontoTyp
+                .Select(x => new SelectListItem()
+                {
+                    Text = x.Bezeichnung, Value = x.Id.ToString()
+                }).ToList();
+
+            kundeKonto.Konten.ForEach(x => x.KontoTypList = kontoTypen);
+            
+            kundeKonto.Konten.Add(new KontoViewModel()
+            {
+                EroeffnungsDatum = DateTime.Today,
+                KontoTypList = kontoTypen,
+                Kontostand = 0,
+                Iban = Convert.ToString(new Random().Next(1000, 9999))
+            });
             return PartialView("KundeKonto", kundeKonto);
         }
 
@@ -125,33 +133,30 @@ namespace OnlineBanking.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind( Include = "Konten")]KundeKontoViewModel vm)
+        public async Task<ActionResult> Create(KundeKontoViewModel vm)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var kontenList = new List<Konto>();
+                    foreach (var konto in vm.Konten)
+                    {
+                        kontenList.Add(new Konto
+                        {
+                            KontoTypId = konto.KontoTypId,
+                            Iban = konto.Iban,
+                            EroeffnungsDatum = konto.EroeffnungsDatum,
+                            Kontostand = konto.Kontostand
+                        });
+                    }
                     var kunde = new Kunde
                     {
                         Geburtsdatum = vm.Geburtsdatum,
                         Nachname = vm.Nachname,
                         Vorname = vm.Vorname,
-                        Konten = new List<Konto>()
+                        Konten = kontenList
                     };
-
-                    Random rnd = new Random();
-                    var konto = new Konto
-                    {
-                        Kunde = kunde,
-                        EroeffnungsDatum = DateTime.Today,
-                        // Hinzufügen eines Kontos mit Iban und Kontotyp ist mehrfach möglich
-
-                        Kontostand = 0,
-                        Iban = Convert.ToString(rnd.Next(1000, 9999)),      //Hier den Randomizer einfügen
-                        KontoTypId = 1
-                        
-                    };
-                    kunde.Konten.Add(konto);
 
                     db.Kunde.Add(kunde);
                     db.SaveChanges();
